@@ -18,7 +18,7 @@ class FinishedFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            gameResult = it.getSerializable(KEY_GAME_RESULT) as GameResult
+            gameResult = it.getParcelable<GameResult>(KEY_GAME_RESULT) as GameResult
         }
     }
 
@@ -37,6 +37,9 @@ class FinishedFragment : Fragment() {
                 retryGame()
             }
         })
+        binding.buttonRetry.setOnClickListener {
+            retryGame()
+        }
     }
 
     private fun retryGame() {
@@ -50,7 +53,7 @@ class FinishedFragment : Fragment() {
         fun newInstance(gameResult: GameResult) =
             FinishedFragment().apply {
                 arguments = Bundle().apply {
-                    putSerializable(KEY_GAME_RESULT, gameResult)
+                    putParcelable(KEY_GAME_RESULT, gameResult)
                 }
             }
     }
