@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import com.example.compositiongame.R
 import com.example.compositiongame.databinding.FragmentChooseLevelBinding
 import com.example.compositiongame.domain.entity.Level
@@ -57,6 +58,7 @@ class ChooseLevelFragment : Fragment() {
     }
 
     private fun launchGameFragment(level: Level){
+//        findNavController().navigate(R.id.action_chooseLevelFragment_to_gameFragment)
         requireActivity().supportFragmentManager.beginTransaction()
             .replace(R.id.main_container,GameFragment.newInstance(level))
             .addToBackStack(null)
