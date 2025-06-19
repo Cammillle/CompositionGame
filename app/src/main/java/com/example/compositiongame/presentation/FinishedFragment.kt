@@ -10,7 +10,6 @@ import androidx.navigation.fragment.findNavController
 import com.example.compositiongame.R
 import com.example.compositiongame.databinding.FragmentFinishedBinding
 
-
 class FinishedFragment : Fragment() {
     private lateinit var binding: FragmentFinishedBinding
     private val args by lazy {
@@ -75,7 +74,6 @@ class FinishedFragment : Fragment() {
             ((countOfRightAnswers / countOfQuestions.toDouble()) * 100).toInt()
         }
     }
-
 
     private fun retryGame() {
         findNavController().popBackStack()
