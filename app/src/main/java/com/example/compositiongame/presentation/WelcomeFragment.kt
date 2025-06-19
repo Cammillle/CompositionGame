@@ -9,24 +9,9 @@ import androidx.navigation.fragment.findNavController
 import com.example.compositiongame.R
 import com.example.compositiongame.databinding.FragmentWelcomeBinding
 
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
 
 class WelcomeFragment : Fragment() {
-    lateinit var binding:FragmentWelcomeBinding
-
-    private var param1: String? = null
-    private var param2: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private lateinit var binding:FragmentWelcomeBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -44,21 +29,11 @@ class WelcomeFragment : Fragment() {
     }
 
     private fun launchChooseLevelFragment(){
-//        findNavController().navigate(R.id.action_welcomeFragment_to_chooseLevelFragment)
-        requireActivity().supportFragmentManager.beginTransaction()
-            .replace(R.id.main_container,ChooseLevelFragment.newInstance())
-            .addToBackStack(ChooseLevelFragment.NAME)
-            .commit()
+        findNavController().navigate(R.id.action_welcomeFragment_to_chooseLevelFragment)
+//        requireActivity().supportFragmentManager.beginTransaction()
+//            .replace(R.id.main_container,ChooseLevelFragment.newInstance())
+//            .addToBackStack(ChooseLevelFragment.NAME)
+//            .commit()
     }
 
-    companion object {
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            WelcomeFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
-    }
 }

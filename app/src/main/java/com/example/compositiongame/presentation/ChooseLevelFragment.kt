@@ -10,23 +10,8 @@ import com.example.compositiongame.R
 import com.example.compositiongame.databinding.FragmentChooseLevelBinding
 import com.example.compositiongame.domain.entity.Level
 
-
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
 class ChooseLevelFragment : Fragment() {
     private lateinit var binding:FragmentChooseLevelBinding
-
-    private var param1: String? = null
-    private var param2: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -58,17 +43,13 @@ class ChooseLevelFragment : Fragment() {
     }
 
     private fun launchGameFragment(level: Level){
-//        findNavController().navigate(R.id.action_chooseLevelFragment_to_gameFragment)
-        requireActivity().supportFragmentManager.beginTransaction()
-            .replace(R.id.main_container,GameFragment.newInstance(level))
-            .addToBackStack(null)
-            .commit()
+        findNavController().navigate(
+            ChooseLevelFragmentDirections.actionChooseLevelFragmentToGameFragment(level))
+//        requireActivity().supportFragmentManager.beginTransaction()
+//            .replace(R.id.main_container,GameFragment.newInstance(level))
+//            .addToBackStack(null)
+//            .commit()
     }
 
-    companion object {
-        const val NAME = "ChooseLevelFragment"
 
-        @JvmStatic
-        fun newInstance() = ChooseLevelFragment()
-    }
 }

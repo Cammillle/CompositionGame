@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.example.compositiongame.R
 import com.example.compositiongame.databinding.FragmentChooseLevelBinding
 import com.example.compositiongame.databinding.FragmentGameBinding
@@ -18,7 +19,9 @@ import com.example.compositiongame.domain.entity.Level
 
 class GameFragment : Fragment() {
     private lateinit var binding: FragmentGameBinding
-    private lateinit var level: Level
+    private val args by lazy {
+        GameFragmentArgs.fromBundle(requireArguments())
+    }
     private val viewModel by lazy {
         ViewModelProvider(
             this,
@@ -37,11 +40,6 @@ class GameFragment : Fragment() {
         }
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        parseArgs()
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -53,7 +51,7 @@ class GameFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         observeViewModel()
-        viewModel.startGame(level)
+        viewModel.startGame(args.level)
         setOnClickListenersToOptions()
     }
 
@@ -108,10 +106,12 @@ class GameFragment : Fragment() {
     }
 
     private fun launchFinishedFragment(gameResult: GameResult) {
-        requireActivity().supportFragmentManager.beginTransaction()
-            .replace(R.id.main_container, FinishedFragment.newInstance(gameResult))
-            .addToBackStack(null)
-            .commit()
+        findNavController().navigate(
+            GameFragmentDirections.actionGameFragmentToFinishedFragment(gameResult))
+//        requireActivity().supportFragmentManager.beginTransaction()
+//            .replace(R.id.main_container, FinishedFragment.newInstance(gameResult))
+//            .addToBackStack(null)
+//            .commit()
     }
 
     private fun getColorByState(goodState:Boolean):Int{
@@ -123,19 +123,5 @@ class GameFragment : Fragment() {
         return ContextCompat.getColor(requireContext(), colorResId)
     }
 
-    private fun parseArgs() {
-        level = requireArguments().getParcelable<Level>(KEY_LEVEL) as Level
-    }
 
-    companion object {
-        private const val KEY_LEVEL = "key_level"
-
-        @JvmStatic
-        fun newInstance(level: Level) =
-            GameFragment().apply {
-                arguments = Bundle().apply {
-                    putParcelable(KEY_LEVEL, level)
-                }
-            }
-    }
 }
